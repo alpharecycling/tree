@@ -110,10 +110,10 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
   dropAllowed: boolean;
 } {
   const { clientX, clientY } = event;
-  const { top, height } = (event.target as HTMLElement).getBoundingClientRect();
+  const { top, height, right, left } = (event.target as HTMLElement).getBoundingClientRect();
   // optional chain for testing
   const horizontalMouseOffset =
-    (direction === 'rtl' ? -1 : 1) * ((startMousePosition?.x || 0) - clientX);
+    (direction === 'rtl' ? -1 : 1) * ((startMousePosition?.x || (right + left) / 2) - clientX);
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
 
   // find abstract drop node by horizontal offset
@@ -149,7 +149,7 @@ export function calcDropPosition<TreeDataType extends BasicDataNode = DataNode>(
     }
   }
 
-  const abstractDragDataNode = dragNode.props.data;
+  const abstractDragDataNode = dragNode && dragNode.props.data;
   const abstractDropDataNode = abstractDropNodeEntity.node;
   let dropAllowed = true;
   if (

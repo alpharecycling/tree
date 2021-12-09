@@ -961,6 +961,37 @@ describe('Tree Basic', () => {
     expect(onCheck).toHaveBeenCalledWith([]);
   });
 
+  it('should be possible to drag from one tree to another', () => {
+    const onDrop = jest.fn();
+    const createTree = props => (
+      <Tree draggable defaultExpandAll {...props}>
+        <TreeNode title="parent 1" key="0-0">
+          <TreeNode className="dragTarget" title="leaf" key="0-0-0-0" />
+          <TreeNode className="dropTarget" title="leaf" key="0-0-0-1" />
+        </TreeNode>
+      </Tree>
+    );
+
+    const wrapper = mount(
+      <div>
+        {createTree()}
+        {createTree({ onDrop })}
+      </div>,
+    );
+
+    const dragTree = wrapper.find(Tree).at(0);
+    const dropTree = wrapper.find(Tree).at(1);
+
+    dragTree.find('.dragTarget > .rc-tree-node-content-wrapper').simulate('dragStart');
+    dropTree.find('.dropTarget').at(0).simulate('dragEnter');
+    dropTree.find('.dropTarget').at(0).simulate('dragOver');
+    dropTree.find('.dropTarget').at(0).simulate('drop');
+    // expect onDrop to be fired even if the drop comes from another tree
+    expect(onDrop.mock.calls[0][0].node.key).toEqual('0-0-0-1');
+    // expect onDrop to return a function that can clean the internal dragState
+    expect(onDrop.mock.calls[0][0].cleanDragState).toBeInstanceOf(Function);
+  });
+
   describe('scrollTo should work', () => {
     let domSpy;
     let called = false;
