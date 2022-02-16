@@ -32,6 +32,9 @@
   "license": "MIT",
   "main": "./lib/index",
   "module": "./es/index",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@alpharecycling/tree"
+  },
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
