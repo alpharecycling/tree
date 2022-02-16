@@ -38,14 +38,11 @@
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
-    "docs:deploy": "gh-pages -d docs-dist",
     "compile": "father build && lessc assets/index.less assets/index.css",
     "prepublishOnly": "npm run compile && np prerelease --yolo --no-publish --any-branch",
-    "postpublish": "npm run gh-pages",
     "lint": "eslint src/ --ext .tsx,.ts,.jsx,.js",
     "test": "father test",
     "coverage": "father test --coverage",
-    "gh-pages": "npm run docs:build && father doc deploy",
     "now-build": "npm run docs:build",
     "prepare": "npm run compile"
   },
