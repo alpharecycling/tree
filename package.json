@@ -33,14 +33,14 @@
   "main": "./lib/index",
   "module": "./es/index",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@alpharecycling/tree"
+    "registry": "https://npm.pkg.github.com/@alpharecycling"
   },
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d docs-dist",
     "compile": "father build && lessc assets/index.less assets/index.css",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish --any-branch",
+    "prepublishOnly": "npm run compile && np prerelease --yolo --no-publish --any-branch",
     "postpublish": "npm run gh-pages",
     "lint": "eslint src/ --ext .tsx,.ts,.jsx,.js",
     "test": "father test",
