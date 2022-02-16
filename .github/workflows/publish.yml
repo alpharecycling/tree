@@ -10,18 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up node
+      - uses: fregante/setup-git-user@v1
       - uses: actions/setup-node@v1
         with:
           node-version: 10.x
           registry-url: https://npm.pkg.github.com/
           scope: '@alpharecycling'
       - run: npm install
-      - name: Set git username and email
-        run: |
-        git config user.name "$(git log -n 1 --pretty=format:%an)"
-        git config user.email "$(git log -n 1 --pretty=format:%ae)"
-      - name: Publish package
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
