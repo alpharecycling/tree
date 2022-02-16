@@ -17,6 +17,9 @@ jobs:
           scope: '@alpharecycling'
       - run: npm install
       - run: npm publish
+        with:
+          global: true
+          name: alpha-admin
+          email: '50398408+jmatelowski@users.noreply.github.com'
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          
